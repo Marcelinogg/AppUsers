@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebAppUsers.Models;
+using WebAppUsers.Services;
 
 namespace WebAppUsers.Validations
 {
@@ -18,7 +19,10 @@ namespace WebAppUsers.Validations
                 RuleFor(x => x.LoginName)
                     .NotNull()
                     .NotEmpty()
-                    .Must(IsUserNameUnique).WithMessage("Alguien ya hace uso del login {LoginName}");
+                    .Must(IsLoginNameUnique).WithMessage("Alguien ya hace uso del login '{PropertyValue}'");
+                RuleFor(x => x.FullName)
+                    .NotNull()
+                    .NotEmpty();
                 RuleFor(x => x.Email)
                         .EmailAddress()
                         .When(y=> !string.IsNullOrEmpty(y.Email));
@@ -36,7 +40,14 @@ namespace WebAppUsers.Validations
                    .GreaterThan(0);
                 RuleFor(x => x.LoginName)
                     .NotNull()
+                    .NotEmpty()
+                    .Must(IsLoginNameUnique).WithMessage("Alguien ya hace uso del login '{PropertyValue}'");
+                RuleFor(x => x.FullName)
+                    .NotNull()
                     .NotEmpty();
+                RuleFor(x => x.Email)
+                        .EmailAddress()
+                        .When(y => !string.IsNullOrEmpty(y.Email));
                 RuleFor(x => x.Password)
                     .NotNull()
                     .NotEmpty()
@@ -56,11 +67,9 @@ namespace WebAppUsers.Validations
             });
         }
 
-        private bool IsUserNameUnique(string userName)
+        private bool IsLoginNameUnique(string loginName)
         {
-            bool result = false;
-
-            return result;
+            return new UserService().IsAvailableLoginName(loginName);
         }
     }
 }

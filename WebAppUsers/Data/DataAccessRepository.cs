@@ -7,14 +7,18 @@ namespace WebAppUsers.Data
 {
     public abstract class DataAccessRepository
     {
-        private string _connString = ConfigurationManager.ConnectionStrings["UsersConnectionString"].ConnectionString;
+        private string _connString = ConfigurationManager.ConnectionStrings["UsersAppBD"].ConnectionString;
 
         protected string ResponeDB(int rowsAffected)
         {
-            return rowsAffected > 0 ? "Ningun elemento fue afectado" : "";
+            return rowsAffected > 0 ? "" : "Ningun elemento fue afectado";
         }
 
-        public DataTable SpGetDataFromBD(string query, List<KeyValuePair<string, string>> parameters = null)
+        public DataTable SpGetDataFromBD(
+            string query,
+            List<KeyValuePair<string, string>> parameters = null,
+            CommandType commandType = CommandType.StoredProcedure
+        )
         {
             DataTable result = new DataTable();
             parameters = parameters ?? new List<KeyValuePair<string, string>>();
@@ -30,9 +34,9 @@ namespace WebAppUsers.Data
                         cmd.Parameters.AddWithValue(param.Key, param.Value);
                     }
 
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = commandType;
 
-                    using (SqlDataAdapter da = new SqlDataAdapter())
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
                         da.Fill(result);
                     }

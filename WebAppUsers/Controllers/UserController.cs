@@ -10,6 +10,7 @@ using WebAppUsers.Services;
 
 namespace WebAppUsers.Controllers
 {
+    [RoutePrefix("api/users")]
     public class UserController : ApiController
     {
         private readonly IUserService _userService;
@@ -21,18 +22,28 @@ namespace WebAppUsers.Controllers
 
 
         [HttpGet]
-        public IHttpActionResult GetUsers()
+        [Route]         // This will be translated  to api/users
+        public IHttpActionResult GeAll()
         {
             return Ok(_userService.GetAll());
         }
 
         [HttpGet]
-        public IHttpActionResult GetById(int id)
+        [Route("{userId}")]         // This will be translated  to api/users//1
+        public IHttpActionResult GetById(int userId)
         {
-            return Ok(_userService.GetById(id));
+            UserDTO user = _userService.GetById(userId);
+
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
 
         [HttpPost]
+        [Route]         // This will be translated  to api/users
         public IHttpActionResult Save([FromBody][CustomizeValidator(RuleSet = "New")] UserSaveDTO user)
         {
             if (!ModelState.IsValid)
@@ -46,6 +57,7 @@ namespace WebAppUsers.Controllers
         }
 
        [HttpPut]
+       [Route]         // This will be translated  to api/users
         public IHttpActionResult Update([FromBody][CustomizeValidator(RuleSet = "Update")] UserSaveDTO user)
         {
             if (!ModelState.IsValid)
@@ -59,6 +71,7 @@ namespace WebAppUsers.Controllers
         }
 
         [HttpPut]
+        [Route("changepassword")]         // This will be translated  to api/users/changepassword
         public IHttpActionResult ChangePassword([FromBody][CustomizeValidator(RuleSet = "UpdatePassword")] UserSaveDTO user)
         {
             if (!ModelState.IsValid)
@@ -72,6 +85,7 @@ namespace WebAppUsers.Controllers
         }
 
         [HttpDelete]
+        [Route("{userId}")]         // This will be translated  to api/users//1
         public IHttpActionResult Remove(int userId)
         {
             _userService.Remove(userId);

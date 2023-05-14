@@ -8,6 +8,7 @@ using WebAppUsers.Services;
 
 namespace WebAppUsers.Controllers
 {
+    [RoutePrefix("api/profiles")]
     public class ProfileController : ApiController
     {
         private readonly IProfileService _profileService;
@@ -19,7 +20,8 @@ namespace WebAppUsers.Controllers
 
 
         [HttpGet]
-        public IHttpActionResult GetProfiles()
+        [Route]         // This will be translated  to /api/profiles
+        public IHttpActionResult GetAll()
         {
             return Ok(_profileService.GetAll());
         }

@@ -36,16 +36,24 @@ namespace WebAppUsers.Services
         {
             User user = _userRepository.GetById(userId);
 
-            return new UserDTO
-            {
-                UserId = user.UserId,
-                LoginName = user.LoginName,
-                FullName = user.FullName,
-                Email = user.Email,
-                Avatar = user.Avatar,
-                Profile = user.Profile,
-            };
+            return user != null
+                ? new UserDTO
+                {
+                    UserId = user.UserId,
+                    LoginName = user.LoginName,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    Avatar = user.Avatar,
+                    Profile = user.Profile,
+                }
+                : null;
         }
+
+        public bool IsAvailableLoginName(string loginName)
+        {
+            return _userRepository.IsAvailableLoginName(loginName);
+        }
+
 
         public void Save(UserSaveDTO user)
         {

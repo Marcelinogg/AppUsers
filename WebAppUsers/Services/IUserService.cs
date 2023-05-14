@@ -12,6 +12,8 @@ namespace WebAppUsers.Services
         IEnumerable<UserDTO> GetAll();
         UserDTO GetById(int userId);
 
+        bool IsAvailableLoginName(string loginName);
+
         void Save(UserSaveDTO user);
         void Update(UserSaveDTO user);
         void ChangePassword(UserSaveDTO user);

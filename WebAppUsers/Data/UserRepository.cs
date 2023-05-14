@@ -30,7 +30,25 @@ namespace WebAppUsers.Data
 
         public User GetById(int userId)
         {
-            return GetAll().First(x => x.UserId == userId);
+            return GetAll().FirstOrDefault(x => x.UserId == userId);
+        }
+
+        public bool IsAvailableLoginName(string loginName)
+        {
+            string query = "Select dbo.fn_IsLoginNameAvailable(@loginName) as LoginName";
+            DataTable dataTable = SpGetDataFromBD(query,
+                 new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("@loginName", loginName),
+                 }
+                 ,CommandType.Text
+                );
+
+            bool result = dataTable.AsEnumerable()
+                                    .First()
+                                    .Field<bool>("LoginName");
+
+            return result;
         }
 
         public string Save(User user)
