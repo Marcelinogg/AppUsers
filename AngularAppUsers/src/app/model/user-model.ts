@@ -6,4 +6,5 @@ export interface UserModel {
     Avatar: string
     ProfileId: number;
     Profile: string;
+    Password: string;
 }

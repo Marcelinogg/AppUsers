@@ -51,9 +51,9 @@ namespace WebAppUsers.Controllers
                 return BadRequest(GetErrors());
             }
 
-            _userService.Save(user);
+            int newUserId = _userService.Save(user);
 
-            return Ok();
+            return Ok(_userService.GetById(newUserId));
         }
 
        [HttpPut]
@@ -67,7 +67,7 @@ namespace WebAppUsers.Controllers
 
             _userService.Update(user);
 
-            return Ok();
+            return Ok(_userService.GetById(user.UserId));
         }
 
         [HttpPut]
@@ -81,7 +81,7 @@ namespace WebAppUsers.Controllers
 
             _userService.ChangePassword(user);
 
-            return Ok();
+            return Ok(_userService.GetById(user.UserId));
         }
 
         [HttpDelete]

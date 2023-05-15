@@ -47,8 +47,10 @@ export class UserNewComponent implements OnInit {
 
   save(): void {
     this.sending = true;
+    console.log(this.form.value);
 
-    if(this.form.valid){
+    // if(this.form.valid){
+      if(true){
       this.userService.saveNewUser(<UserNewModel>this.form.value)
                       .subscribe(resp => {
                         this.router.navigate([""]);

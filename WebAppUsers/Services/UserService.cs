@@ -26,7 +26,9 @@ namespace WebAppUsers.Services
                                     LoginName = x.LoginName,
                                     FullName = x.FullName,
                                     Email = x.Email,
+                                    Password = x.Password,
                                     Avatar = x.Avatar,
+                                    ProfileId = x.ProfileId,
                                     Profile = x.Profile,
                                 })
                                 .ToList();
@@ -43,7 +45,9 @@ namespace WebAppUsers.Services
                     LoginName = user.LoginName,
                     FullName = user.FullName,
                     Email = user.Email,
+                    Password = user.Password,
                     Avatar = user.Avatar,
+                    ProfileId = user.ProfileId,
                     Profile = user.Profile,
                 }
                 : null;
@@ -55,7 +59,7 @@ namespace WebAppUsers.Services
         }
 
 
-        public void Save(UserSaveDTO user)
+        public int Save(UserSaveDTO user)
         {
             OperationComplete(
                 _userRepository.Save(
@@ -70,6 +74,8 @@ namespace WebAppUsers.Services
                 }
                 )
             );
+
+            return _userRepository.GetUserIdByLoginName(user.LoginName);
         }
 
         public void Update(UserSaveDTO user)

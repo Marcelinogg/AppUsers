@@ -17,6 +17,7 @@
                     <th>NOMBRE</th>
                     <th>EMAIL</th>
                     <th>PERFIL</th>
+                    <th>CONTRASEÑA</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -33,6 +34,7 @@
                     <td>{{ user.FullName }}</td>
                     <td>{{ user.Email }}</td>
                     <td>{{ user.Profile }}</td>
+                    <td> {{ (user.Password.length>10) ? (user.Password | slice:0:20) + '...': (user.Password) }}</td>
                     <td>
                         <button type="button" class="btn btn-success" (click)="gotoUserUpdate(user.UserId)" title="Editar usuario">
                             <i class="bi bi-pencil-fill"></i>

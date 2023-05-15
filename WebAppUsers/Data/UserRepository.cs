@@ -44,11 +44,25 @@ namespace WebAppUsers.Data
                  ,CommandType.Text
                 );
 
-            bool result = dataTable.AsEnumerable()
+            return dataTable.AsEnumerable()
                                     .First()
                                     .Field<bool>("LoginName");
+        }
 
-            return result;
+        public int GetUserIdByLoginName(string loginName)
+        {
+            string query = "Select dbo.fn_GetUserIdByLoginName(@loginName) as UserId";
+            DataTable dataTable = SpGetDataFromBD(query,
+                 new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("@loginName", loginName),
+                 }
+                 , CommandType.Text
+                );
+
+            return dataTable.AsEnumerable()
+                                    .First()
+                                    .Field<int>("UserId");
         }
 
         public string Save(User user)

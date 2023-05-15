@@ -14,7 +14,7 @@ namespace WebAppUsers.Services
 
         bool IsAvailableLoginName(string loginName);
 
-        void Save(UserSaveDTO user);
+        int Save(UserSaveDTO user);
         void Update(UserSaveDTO user);
         void ChangePassword(UserSaveDTO user);
         void Remove(int userId);
