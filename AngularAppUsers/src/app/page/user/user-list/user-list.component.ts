@@ -35,6 +35,7 @@ export class UserListComponent implements OnInit {
   }
 
   removeUser(userId:number) {
+    
     if(confirm(`¿Quitar el usuario ${userId}?`)) {
       this.userService.removeUser(userId)
                     .subscribe(resp => this.userlist = resp);

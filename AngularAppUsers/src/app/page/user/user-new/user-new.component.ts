@@ -14,7 +14,7 @@ import { ConfirmPasswordValidator } from 'src/app/validation/confirm-password.va
   styleUrls: ['./user-new.component.css']
 })
 export class UserNewComponent implements OnInit {
-  sending:boolean;
+  sending:boolean;      // It is used to enable the save button to avoid the double click
   form:FormGroup;
   profileList:ProfileModel[] = [];
   messageFromAPI:string;
@@ -27,9 +27,11 @@ export class UserNewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Waits to the list of profiles
     this.profileService.getProfiles()
                     .subscribe(resp => {
                       this.profileList = resp;
+
                       this.form = this.fb.group({
                         LoginName: ['', Validators.required],
                         FullName: ['', Validators.required],
@@ -49,17 +51,16 @@ export class UserNewComponent implements OnInit {
     this.sending = true;
     console.log(this.form.value);
 
-    // if(this.form.valid){
-      if(true){
+    if(this.form.valid){
       this.userService.saveNewUser(<UserNewModel>this.form.value)
                       .subscribe(resp => {
-                        this.router.navigate([""]);
+                        this.router.navigate([""]);   // Go to home to see the new item
                       },
                       error => {
                         console.log(error);
                         this.sending = false;
 
-                        if(error.status == 400){  // Badrequest is a error known
+                        if(error.status == 400){      // Badrequest is a error known
                           this.messageFromAPI = error?.error?.Message;
                         }
                         else {

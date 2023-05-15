@@ -38,7 +38,7 @@ namespace WebAppUsers.Services
         {
             User user = _userRepository.GetById(userId);
 
-            return user != null
+            return user != null                             // Checks the object because could by null and when is null send a 404 status
                 ? new UserDTO
                 {
                     UserId = user.UserId,
@@ -53,6 +53,7 @@ namespace WebAppUsers.Services
                 : null;
         }
 
+        // Is used to check in the database if the new login is already occupied
         public bool IsAvailableLoginName(string loginName)
         {
             return _userRepository.IsAvailableLoginName(loginName);
@@ -115,7 +116,7 @@ namespace WebAppUsers.Services
             );
         }
 
-
+        // When the operation had affected the database it is good but when does not throw an exception to notify the log
         private void OperationComplete(string result)
         {
             if (!string.IsNullOrEmpty(result))

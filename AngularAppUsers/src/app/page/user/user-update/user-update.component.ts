@@ -15,7 +15,7 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./user-update.component.css']
 })
 export class UserUpdateComponent implements OnInit {
-  sending:boolean;
+  sending:boolean;      // It is used to enable the save button to avoid the double click
   form:FormGroup;
   profileList:ProfileModel[] = [];
   messageFromAPI:string;
@@ -33,6 +33,7 @@ export class UserUpdateComponent implements OnInit {
     this.route.params.subscribe(params => {
       let userId = +params['id']; // (+) converts string 'id' to a number
 
+      // Waits to the both requests
       forkJoin([
         this.profileService.getProfiles(),
         this.userService.getUser(userId),
@@ -62,13 +63,13 @@ export class UserUpdateComponent implements OnInit {
 
       this.userService.saveChangeDataUser(userToUpdate)
                       .subscribe(resp => {
-                        this.router.navigate([""]);
+                        this.router.navigate([""]);   // Go to home to see the updated item
                       },
                       error => {
                         console.log(error);
                         this.sending = false;
 
-                        if(error.status == 400){  // Badrequest is a error known
+                        if(error.status == 400){      // Badrequest is a error known
                           this.messageFromAPI = error?.error?.Message;
                         }
                         else {
