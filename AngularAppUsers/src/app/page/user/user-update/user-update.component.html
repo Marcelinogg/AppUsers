@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            ACTUALIZAR DATOS - USUARIO
+        </div>
+        <div class="card-body">
+            <form *ngIf="form" [formGroup]="form" (ngSubmit)="save()">
+                <div class="row">
+                    <div class="col-5">
+                        <app-image-upload [form]="form"></app-image-upload>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="UserId" class="form-label">ID</label>
+                            <input type="text" id="UserId" class="form-control form-control-sm"
+                                formControlName="UserId" />
+                        </div>
+                        <div class="form-group">
+                            <label for="LoginName" class="form-label">Login</label>
+                            <input type="text" id="LoginName" class="form-control form-control-sm"
+                                formControlName="LoginName" />
+                            <small
+                                *ngIf="form.get('LoginName').errors?.required && (form.get('LoginName').dirty || form.get('LoginName').touched)"
+                                class="text-danger">
+                                Ingresa un nombre para tu login
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="FullName" class="form-label">Nombre</label>
+                            <input type="text" id="FullName" class="form-control form-control-sm"
+                                formControlName="FullName" />
+                            <small
+                                *ngIf="form.get('FullName').errors?.required && (form.get('FullName').dirty || form.get('FullName').touched)"
+                                class="text-danger">
+                                Ingresa tu nombre completo
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="Email" class="form-label">Correo electrónico</label>
+                            <input type="text" id="Email" class="form-control form-control-sm" formControlName="Email" />
+                            <small
+                                *ngIf="form.get('Email').errors?.email && (form.get('Email').dirty || form.get('Email').touched)"
+                                class="text-danger">
+                                Ingresa un correo válido
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProfileId" class="form-label">Perfil</label>
+                            <select id="ProfileId" class="form-control form-control-sm" formControlName="ProfileId">
+                                <option value="" disabled selected>Seleccione ...</option>
+                                <option *ngFor="let profile of profileList" [value]="profile.Id">{{ profile.Name }}</option>
+                            </select>
+                            <small
+                                *ngIf="form.get('ProfileId').errors?.required && (form.get('ProfileId').dirty || form.get('ProfileId').touched)"
+                                class="text-danger">
+                                Selecciona un perfil
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-success" [disabled]="sending">GUARDAR CAMBIOS</button>
+                    </div>
+                    <div class="col">
+                        <a routerLink="" class="btn btn-secondary">CANCELAR</a>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <small *ngIf="messageFromAPI" class="text-danger">{{messageFromAPI}}</small>
+        </div>
+    </div>
+</div>

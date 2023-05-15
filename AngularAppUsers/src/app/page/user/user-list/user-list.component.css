@@ -1,0 +1,15 @@
+.row-margin-top {
+    margin-top: 0.1rem;
+}
+
+.user-new-button {
+    font-size: 1.1rem;
+}
+
+.user-avatar {
+    font-size: 1.6rem;
+}
+
+img {
+    max-height: 3rem;
+}

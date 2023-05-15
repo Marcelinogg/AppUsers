@@ -1,0 +1,7 @@
+<div [formGroup]="form">
+    <div class="form-group">
+        <label for="Avatar">Avatar:</label>
+        <img *ngIf="form.get('Avatar')?.value" [src]="form.get('Avatar').value">
+        <input id="Avatar" type="file" class="form-control" (change)="onFileChange($event)" accept="image/*">
+    </div>
+</div>

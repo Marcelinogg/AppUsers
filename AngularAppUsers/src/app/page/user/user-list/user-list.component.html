@@ -1,0 +1,61 @@
+<div class="row text-right row-margin-top">
+    <div class="col">
+        <button type="button" class="btn btn-primary" (click)="gotoUserNewPage()">
+            <i class="bi bi-person-plus user-new-button"></i>&nbsp; NUEVO
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table table-sm table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th></th>
+                    <th>ID</th>
+                    <th>LOGIN</th>
+                    <th>NOMBRE</th>
+                    <th>EMAIL</th>
+                    <th>PERFIL</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userlist; index as i">
+                    <td>{{ i+1 }}</td>
+                    <td>
+                        <img *ngIf="user.Avatar; else avatarDefault" [src]="user.Avatar" alt="avatar">
+                    </td>
+                    <td>{{ user.UserId }}</td>
+                    <td>{{ user.LoginName }}</td>
+                    <td>{{ user.FullName }}</td>
+                    <td>{{ user.Email }}</td>
+                    <td>{{ user.Profile }}</td>
+                    <td>
+                        <button type="button" class="btn btn-success" (click)="gotoUserUpdate(user.UserId)" title="Editar usuario">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success" (click)="gotoUserUpdatePassword(user.UserId)" title="Editar contraseña">
+                            <i class="bi bi-pencil-fill"></i>
+                            &nbsp;
+                            <i class="bi bi-key-fill"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" (click)="removeUser(user.UserId)" title="Quitar usuario">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #avatarDefault>
+    <i class="bi bi-person-square user-avatar"></i>
+</ng-template>
